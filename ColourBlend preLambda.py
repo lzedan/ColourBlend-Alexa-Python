@@ -231,26 +231,26 @@ class colour():
     #If both tests fail, the function returns a false value.
     #That could probably be changed to something more pragmatic in a future version.    
     def determineInput(someColour):
-    		hexCompliant = True
-    		
-    		if(len(someColour) <= 7):
-    			for i in someColour:
-    				if(i >= 'g') and (i != '#'):
-    					hexCompliant = False
-    		else:
-    			hexCompliant = False
-    			
-    		newColour = colour()
-    		
-    		if(hexCompliant):
-    			newColour.fromHex(someColour)
-    		elif(hexCompliant == False):
-    			if(someColour in webColourDict):
-    				newColour.fromWebColour(someColour)
-    			else:
-    				newColour = False
-    		
-    		return newColour
+                hexCompliant = True
+                
+                if(len(someColour) <= 7):
+                        for i in someColour:
+                                if(i >= 'g') and (i != '#'):
+                                        hexCompliant = False
+                else:
+                        hexCompliant = False
+                        
+                newColour = colour()
+                
+                if(hexCompliant):
+                        newColour.fromHex(someColour)
+                elif(hexCompliant == False):
+                        if(someColour in webColourDict):
+                                newColour.fromWebColour(someColour)
+                        else:
+                                newColour = False
+                
+                return newColour
 
     #-----------convertToHSB-----------
     #Taking a colour object as input, convert the values into a Hue, 
@@ -406,42 +406,42 @@ class colour():
     #This style of blending is analagous to light. Light always "adds up" eventually to white.
     #The function returns a colour object
     def add(*args):
-    		operatedColours = []
-    		tempColour = colour()
+                operatedColours = []
+                tempColour = colour()
 
             #Again, we're going through the inputs and seeing if they map out to valid representations
             #of colour. Then we add their objects to our array.
-    		for i in args:
-    			tempColour = colour.determineInput(i)
-    			if(tempColour != False):
-    				operatedColours.append(tempColour)
-    		
+                for i in args:
+                        tempColour = colour.determineInput(i)
+                        if(tempColour != False):
+                                operatedColours.append(tempColour)
+                
             #If this function has failed to process the inputs as valid colours, than the input is invalid.
             #The function returns a string for now, but TODO: I'll change it to something else later.
-    		if(len(operatedColours) <= 1):
-    			return "Lol no"
-    		else:
-    			red = 0
-    			blue = 0
-    			green = 0
-    			for j in operatedColours:
-    				red += j.red
-    				green += j.green
-    				blue += j.blue
-    			
+                if(len(operatedColours) <= 1):
+                        return "Lol no"
+                else:
+                        red = 0
+                        blue = 0
+                        green = 0
+                        for j in operatedColours:
+                                red += j.red
+                                green += j.green
+                                blue += j.blue
+                        
                 #Here's the only complication of this function.
                 #Our RGB colour values max out at 255 because it's an 8-bit value.
                 #If the channels, after adding, go above 255, they must be set back to 255.
-    			if(red > 255):
-    				red = 255
-    			if(green > 255):
-    				green = 255
-    			if(blue > 255):
-    				blue = 255
-    				
-    			outputColour = colour(red, green, blue)    			
-    			return outputColour
-        		
+                        if(red > 255):
+                                red = 255
+                        if(green > 255):
+                                green = 255
+                        if(blue > 255):
+                                blue = 255
+                                
+                        outputColour = colour(red, green, blue)                         
+                        return outputColour
+                        
     #----------subtract----------
     #Like the add function, this will take in inputs and process them as colours.
     #Right now this function replicates the operations of Mathematica's colour subtraction.
@@ -456,42 +456,44 @@ class colour():
         #Again, we're going through the inputs and seeing if they map out to valid representations
         #of colour. Then we add their objects to our array.
         for i in args:
-        	tempColour = colour.determineInput(i)
-        	if(tempColour != False):
-        		operatedColours.append(tempColour)
+                tempColour = colour.determineInput(i)
+                if(tempColour != False):
+                        operatedColours.append(tempColour)
         
         #If this function has failed to process the inputs as valid colours, than the input is invalid.
         #The function returns a string for now, but TODO: I'll change it to something else later.
         if(len(operatedColours) <= 1):
-        	return "Lol no"
+                return "Lol no"
         else:
-        	red = operatedColours[0].red
-        	green = operatedColours[0].green
-        	blue = operatedColours[0].blue
-        	j = 1
-        	
-        	while(j < len(operatedColours)):
-        		red += operatedColours[j].red
-        		green += operatedColours[j].green
-        		blue += operatedColours[j].blue
-        		
-        		j += 1
-        	
-        	if(red > 255):
-        		red = red % 255
-            else:
-                red = 0
-        	if(green > 255):
-        		green = green % 255
-            else:
-                green = 0
-        	if(blue > 255):
-        		blue = blue % 255
-            else:
-                blue = 0
-        	
-        	outputColour = colour(red, green, blue)        	
-        	return outputColour
+                red = operatedColours[0].red
+                green = operatedColours[0].green
+                blue = operatedColours[0].blue
+                j = 1
+                
+                while(j < len(operatedColours)):
+                    red += operatedColours[j].red
+                    green += operatedColours[j].green
+                    blue += operatedColours[j].blue
+                        
+                    j += 1
+
+                    if(red > 255):
+                        red = red % 255
+                    else:
+                        red = 0
+
+                    if(green > 255):
+                        green = green % 255
+                    else:
+                        green = 0
+                        
+                    if(blue > 255):
+                        blue = blue % 255
+                    else:
+                        blue = 0
+                
+                outputColour = colour(red, green, blue)             
+                return outputColour
 
     #----------fuse----------
     #I didn't have a name for this operation as I already used "blend", so this will have to do.
